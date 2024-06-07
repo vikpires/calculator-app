@@ -10,27 +10,27 @@ enum Operation {
 
 // Classe da calculadora
 class Calculator {
-    private operacao: Operation;
+    private value: Operation;
     constructor(initialValue: number = 0) {
-        this.operacao = Operation.Add; // Define uma operação padrão, se necessário
+        this.value= Operation.Add; // Define uma operação padrão, se necessário
     }
 
-    definirOperacao(operacao: Operation) {
-        this.operacao = operacao;
+    defineOperation(operation: Operation) {
+        this.value = operation;
     }
 
     // realizar operação
-    calcular(numero1: number, numero2: number): number {
-        switch (this.operacao) {
+    calculate (number1: number, num2: number): number {
+        switch (this.value) {
             case Operation.Add:
-                return numero1 + numero2;
+                return number1 + number2;
             case Operation.Subtract:
-                return numero1 - numero2;
+                return number1 - number2;
             case Operation.Multiply:
-                return numero1 * numero2;
+                return number1 * number2;
             case Operation.Divide:
-                if (numero2 !== 0) {
-                    return numero1 / numero2;
+                if (number2 !== 0) {
+                    return number1 / number2;
                 } else {
                     console.log("Erro: Divisão por zero!");
                     return NaN;
@@ -43,43 +43,40 @@ class Calculator {
 }
 
 // inicial
-const calculadora = new Calculator();
+const calculator = new Calculator();
 //var stt:boolean = false;
 
 let msg:String = '----------CALCULADORA----------\n';
 console.log(msg);
 
-
 //stt = true;
-
-let op = readlineSync.question('Digite a operação (+, /, *, -): ');
-
-let number1 = readlineSync.question('Digite o primeiro número: ');
-let number2 = readlineSync.question('Digite o segundo número: ');
+let operate = readlineSync.question('Digite a operação (+, /, *, -): ');
+let readNumber1 = readlineSync.question('Digite o primeiro número: ');
+let readNumber2 = readlineSync.question('Digite o segundo número: ');
 
 
-let num1 = parseFloat(number1);
-let num2 = parseFloat(number2);
+let number1 = parseFloat(readNumber1);
+let number2 = parseFloat(readNumber2);
 
-switch (op){
+switch (operate){
     case '+':
-        calculadora.definirOperacao(Operation.Add);
-        console.log(calculadora.calcular(num1, num2));
+        calculator.defineOperation(Operation.Add);
+        console.log(calculator.calculate(number1, number2));
         break;
 
     case '/':
-        calculadora.definirOperacao(Operation.Divide);
-        console.log(calculadora.calcular(num1, num2));
+        calculator.defineOperation(Operation.Divide);
+        console.log(calculator.calculate(number1, number2));
         break;
 
         case '*':
-            calculadora.definirOperacao(Operation.Multiply);
-    console.log(calculadora.calcular(num1, num2));
+            calculator.defineOperation(Operation.Multiply);
+    console.log(calculator.calculate(number1, number2));
         break;
 
     case '-':
-        calculadora.definirOperacao(Operation.Subtract);
-        console.log(calculadora.calcular(num1, num2));
+        calculator.defineOperation(Operation.Subtract);
+        console.log(calculator.calculate(number1, number2));
         break;
 
     default:
@@ -88,31 +85,3 @@ switch (op){
 
 
 }
-
-
-/*if(op == '+'){
-    calculadora.definirOperacao(Operation.Add);
-    console.log(calculadora.calcular(num1, num2));
-} else if (op == '/'){
-    calculadora.definirOperacao(Operation.Divide);
-    console.log(calculadora.calcular(num1, num2));
-}
-else if (op == '*'){
-    calculadora.definirOperacao(Operation.Multiply);
-    console.log(calculadora.calcular(num1, num2));
-}
-else if (op == '-'){
-    calculadora.definirOperacao(Operation.Subtract);
-    console.log(calculadora.calcular(num1, num2));
-} else{
-    var error: String = 'Erro. Operação não reconhecida'
-}
-}catch(error){
-    console.log('Operação não reconhecida')
-
-}*/
-
-
-/*const calculadora = new Calculator();
-calculadora.definirOperacao(Operation.Add);
-console.log(calculadora.calcular(9, 3)); */
