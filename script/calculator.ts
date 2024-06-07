@@ -1,9 +1,9 @@
 // Enum para representar as operações
 enum Operation {
-    Sum = "add",
-    Subtract = "subtract",
-    Multiply = "multiply",
-    Divide = "divide"
+    Add = "+",
+    Subtract = "-",
+    Multiply = "*",
+    Divide = "/"
 };
 
 //Classe da calculadora
