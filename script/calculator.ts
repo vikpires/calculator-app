@@ -1,6 +1,6 @@
-var readlineSync = require('readline-sync');
+const readlineSync = require('readline-sync');
 
-// Enum para representar as operações
+// enum para as operações
 enum Operation {
     Add = "+",
     Subtract = "-",
@@ -8,19 +8,19 @@ enum Operation {
     Divide = "/"
 }
 
-// Classe da calculadora
+// classe calculadora
 class Calculator {
     private value: Operation;
-    constructor(initialValue: number = 0) {
-        this.value= Operation.Add; // Define uma operação padrão, se necessário
+    constructor() {
+        this.value = Operation.Add; // operacao padrao
     }
 
     defineOperation(operation: Operation) {
         this.value = operation;
     }
 
-    // realizar operação
-    calculate (number1: number, num2: number): number {
+    // operação
+    calculate(number1: number, number2: number): number {
         switch (this.value) {
             case Operation.Add:
                 return number1 + number2;
@@ -42,46 +42,60 @@ class Calculator {
     }
 }
 
-// inicial
+// inicio
 const calculator = new Calculator();
-//var stt:boolean = false;
 
-let msg:String = '----------CALCULADORA----------\n';
-console.log(msg);
+let menuMessage = `
+----------CALCULADORA----------
+1 - Adição (+)
+2 - Subtração (-)
+3 - Multiplicação (*)
+4 - Divisão (/)
+5 - Sair
+--------------------------------
+`;
 
-//stt = true;
-let operate = readlineSync.question('Digite a operação (+, /, *, -): ');
-let readNumber1 = readlineSync.question('Digite o primeiro número: ');
-let readNumber2 = readlineSync.question('Digite o segundo número: ');
+console.log(menuMessage);
 
+let menuOption = readlineSync.question('Escolha uma opção do menu: ');
+let switchOperation: string;
 
-let number1 = parseFloat(readNumber1);
-let number2 = parseFloat(readNumber2);
-
-switch (operate){
-    case '+':
+switch (menuOption) {
+    case '1':
+        switchOperation = 'adição';
         calculator.defineOperation(Operation.Add);
-        console.log(calculator.calculate(number1, number2));
         break;
-
-    case '/':
-        calculator.defineOperation(Operation.Divide);
-        console.log(calculator.calculate(number1, number2));
-        break;
-
-        case '*':
-            calculator.defineOperation(Operation.Multiply);
-    console.log(calculator.calculate(number1, number2));
-        break;
-
-    case '-':
+    case '2':
+        switchOperation = 'subtração';
         calculator.defineOperation(Operation.Subtract);
-        console.log(calculator.calculate(number1, number2));
         break;
-
+    case '3':
+        switchOperation = 'multiplicação';
+        calculator.defineOperation(Operation.Multiply);
+        break;
+    case '4':
+        switchOperation = 'divisão';
+        calculator.defineOperation(Operation.Divide);
+        break;
+    case '5':
+        console.log('Obrigado por usar a calculadora!');
+        process.exit(0);
     default:
-        let error: String = 'Erro. Operação não reconhecida';
-        console.log(error);
-
-
+        console.log('Erro. Operação não reconhecida.');
+        process.exit(1);
 }
+
+
+let number1 = readlineSync.question('Digite o primeiro número: ');
+let number2 = readlineSync.question('Digite o segundo número: ');
+
+let num1 = parseFloat(number1);
+let num2 = parseFloat(number2);
+
+if (isNaN(num1) || isNaN(num2)) {
+    console.log('Erro: Entrada inválida. Certifique-se de digitar números válidos.');
+    process.exit(1);
+}
+
+let result = calculator.calculate(num1, num2);
+console.log(`Resultado da operação de ${switchOperation} entre ${num1} e ${num2} é: ${result}`);

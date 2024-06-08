@@ -1,6 +1,6 @@
 "use strict";
-var readlineSync = require('readline-sync');
-// Enum para representar as operações
+const readlineSync = require('readline-sync');
+// enum para as operações
 var Operation;
 (function (Operation) {
     Operation["Add"] = "+";
@@ -8,26 +8,26 @@ var Operation;
     Operation["Multiply"] = "*";
     Operation["Divide"] = "/";
 })(Operation || (Operation = {}));
-// Classe da calculadora
+// classe calculadora
 class Calculator {
-    constructor(initialValue = 0) {
-        this.operacao = Operation.Add; // Define uma operação padrão, se necessário
+    constructor() {
+        this.value = Operation.Add; // operacao padrao
     }
-    definirOperacao(operacao) {
-        this.operacao = operacao;
+    defineOperation(operation) {
+        this.value = operation;
     }
-    // realizar operação
-    calcular(numero1, numero2) {
-        switch (this.operacao) {
+    // operação
+    calculate(number1, number2) {
+        switch (this.value) {
             case Operation.Add:
-                return numero1 + numero2;
+                return number1 + number2;
             case Operation.Subtract:
-                return numero1 - numero2;
+                return number1 - number2;
             case Operation.Multiply:
-                return numero1 * numero2;
+                return number1 * number2;
             case Operation.Divide:
-                if (numero2 !== 0) {
-                    return numero1 / numero2;
+                if (number2 !== 0) {
+                    return number1 / number2;
                 }
                 else {
                     console.log("Erro: Divisão por zero!");
@@ -39,59 +39,51 @@ class Calculator {
         }
     }
 }
-// inicial
-const calculadora = new Calculator();
-//var stt:boolean = false;
-let msg = '----------CALCULADORA----------\n';
-console.log(msg);
-//stt = true;
-let op = readlineSync.question('Digite a operação (+, /, *, -): ');
+// inicio
+const calculator = new Calculator();
+let menuMessage = `
+----------CALCULADORA----------
+1 - Adição (+)
+2 - Subtração (-)
+3 - Multiplicação (*)
+4 - Divisão (/)
+5 - Sair
+--------------------------------
+`;
+console.log(menuMessage);
+let menuOption = readlineSync.question('Escolha uma opção do menu: ');
+let switchOperation;
+switch (menuOption) {
+    case '1':
+        switchOperation = 'adição';
+        calculator.defineOperation(Operation.Add);
+        break;
+    case '2':
+        switchOperation = 'subtração';
+        calculator.defineOperation(Operation.Subtract);
+        break;
+    case '3':
+        switchOperation = 'multiplicação';
+        calculator.defineOperation(Operation.Multiply);
+        break;
+    case '4':
+        switchOperation = 'divisão';
+        calculator.defineOperation(Operation.Divide);
+        break;
+    case '5':
+        console.log('Obrigado por usar a calculadora!');
+        process.exit(0);
+    default:
+        console.log('Erro. Operação não reconhecida.');
+        process.exit(1);
+}
 let number1 = readlineSync.question('Digite o primeiro número: ');
 let number2 = readlineSync.question('Digite o segundo número: ');
 let num1 = parseFloat(number1);
 let num2 = parseFloat(number2);
-switch (op) {
-    case '+':
-        calculadora.definirOperacao(Operation.Add);
-        console.log(calculadora.calcular(num1, num2));
-        break;
-    case '/':
-        calculadora.definirOperacao(Operation.Divide);
-        console.log(calculadora.calcular(num1, num2));
-        break;
-    case '*':
-        calculadora.definirOperacao(Operation.Multiply);
-        console.log(calculadora.calcular(num1, num2));
-        break;
-    case '-':
-        calculadora.definirOperacao(Operation.Subtract);
-        console.log(calculadora.calcular(num1, num2));
-        break;
-    default:
-        let error = 'Erro. Operação não reconhecida';
-        console.log(error);
+if (isNaN(num1) || isNaN(num2)) {
+    console.log('Erro: Entrada inválida. Certifique-se de digitar números válidos.');
+    process.exit(1);
 }
-/*if(op == '+'){
-    calculadora.definirOperacao(Operation.Add);
-    console.log(calculadora.calcular(num1, num2));
-} else if (op == '/'){
-    calculadora.definirOperacao(Operation.Divide);
-    console.log(calculadora.calcular(num1, num2));
-}
-else if (op == '*'){
-    calculadora.definirOperacao(Operation.Multiply);
-    console.log(calculadora.calcular(num1, num2));
-}
-else if (op == '-'){
-    calculadora.definirOperacao(Operation.Subtract);
-    console.log(calculadora.calcular(num1, num2));
-} else{
-    var error: String = 'Erro. Operação não reconhecida'
-}
-}catch(error){
-    console.log('Operação não reconhecida')
-
-}*/
-/*const calculadora = new Calculator();
-calculadora.definirOperacao(Operation.Add);
-console.log(calculadora.calcular(9, 3)); */
+let result = calculator.calculate(num1, num2);
+console.log(`Resultado da operação de ${switchOperation} entre ${num1} e ${num2} é: ${result}`);
