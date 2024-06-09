@@ -1,6 +1,6 @@
 "use strict";
 const readlineSync = require('readline-sync');
-// enum para as operações
+// Enum for operations
 var Operation;
 (function (Operation) {
     Operation["Add"] = "+";
@@ -8,17 +8,20 @@ var Operation;
     Operation["Multiply"] = "*";
     Operation["Divide"] = "/";
 })(Operation || (Operation = {}));
-// classe calculadora
+// Setting calculator class
 class Calculator {
     constructor() {
-        this.value = Operation.Add; // operacao padrao
+        this.operation = Operation.Add; //Default operation
     }
-    defineOperation(operation) {
-        this.value = operation;
+    setOperation(operation) {
+        this.operation = operation;
     }
-    // operação
+    getOperation() {
+        return this.operation;
+    }
+    // Calculate math operations
     calculate(number1, number2) {
-        switch (this.value) {
+        switch (this.operation) {
             case Operation.Add:
                 return number1 + number2;
             case Operation.Subtract:
@@ -30,60 +33,70 @@ class Calculator {
                     return number1 / number2;
                 }
                 else {
-                    console.log("Erro: Divisão por zero!");
-                    return NaN;
+                    throw new Error("Não há divisão por zero. Tente novamente.");
                 }
             default:
-                console.log("Operação inválida!");
-                return NaN;
+                throw new Error("Operação inválida! Tente novamente.");
         }
     }
 }
-// inicio
+// Function to obtain valid number inputs
+function getValidNumberInput(prompt) {
+    while (true) {
+        const input = parseFloat(readlineSync.question(prompt));
+        if (!isNaN(input)) {
+            return input;
+        }
+        else {
+            console.log('Erro: Digite um número válido.');
+        }
+    }
+}
+// Setting menu
 const calculator = new Calculator();
-let menuMessage = `
+function displayMenu() {
+    console.log(`
 ----------CALCULADORA----------
+
 1 - Adição (+)
 2 - Subtração (-)
 3 - Multiplicação (*)
 4 - Divisão (/)
 5 - Sair
 --------------------------------
-`;
-console.log(menuMessage);
-let menuOption = readlineSync.question('Escolha uma opção do menu: ');
-let switchOperation;
-switch (menuOption) {
-    case '1':
-        switchOperation = 'adição';
-        calculator.defineOperation(Operation.Add);
-        break;
-    case '2':
-        switchOperation = 'subtração';
-        calculator.defineOperation(Operation.Subtract);
-        break;
-    case '3':
-        switchOperation = 'multiplicação';
-        calculator.defineOperation(Operation.Multiply);
-        break;
-    case '4':
-        switchOperation = 'divisão';
-        calculator.defineOperation(Operation.Divide);
-        break;
-    case '5':
-        console.log('Obrigado por usar a calculadora!');
-        process.exit(0);
-    default:
-        console.log('Erro. Operação não reconhecida.');
-        process.exit(1);
+`);
 }
-let number1 = readlineSync.question('Digite o primeiro número: ');
-let number2 = readlineSync.question('Digite o segundo número: ');
-let num1 = parseFloat(number1);
-let num2 = parseFloat(number2);
-if (isNaN(num1) || isNaN(num2)) {
-    console.log('Erro: Entrada inválida. Certifique-se de digitar números válidos.');
-    process.exit(1);
+// Setting operations with looping and error handling
+while (true) {
+    displayMenu();
+    const menuOption = readlineSync.question('Escolha uma opcao do menu: ');
+    switch (menuOption) {
+        case '1':
+            calculator.setOperation(Operation.Add);
+            break;
+        case '2':
+            calculator.setOperation(Operation.Subtract);
+            break;
+        case '3':
+            calculator.setOperation(Operation.Multiply);
+            break;
+        case '4':
+            calculator.setOperation(Operation.Divide);
+            break;
+        case '5':
+            console.log('Obrigado por usar a calculadora. Até a próxima!');
+            process.exit(0);
+        default:
+            console.log('Erro: Operação não reconhecida. Tente novamente.');
+            process.exit(1);
+    }
+    const number1 = getValidNumberInput('Digite o primeiro numero: ');
+    const number2 = getValidNumberInput('Digite o segundo numero: ');
+    try {
+        const result = calculator.calculate(number1, number2);
+        console.log(`O resultado é: ${result}`);
+    }
+    catch (error) {
+        console.log("Erro: ", error.message);
+    }
 }
-let result = calculator.calculate(num1, num2);
-console.log(`Resultado da operação de ${switchOperation} entre ${num1} e ${num2} é: ${result}`);
