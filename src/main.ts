@@ -29,7 +29,9 @@ class CalculatorApp {
                
                 try{ 
                     const result = calculator.calculate(number1, number2);
-                    console.log(`O resultado da operação é: ${result}`);        
+                    console.log(`
+O resultado da operação é: ${result}           
+            `);        
                 }catch(error: any){
                     console.log("Erro: ", error.message);
                 }

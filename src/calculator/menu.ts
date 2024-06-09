@@ -11,8 +11,9 @@ export class Menu {
             2 - Subtração (-)
             3 - Multiplicação (*)
             4 - Divisão (/)
-            5 - Sair            
-            --------------------------------
+            5 - Sair        
+
+            -------------------------------
             `);
     }
     public static getCalculateOption(choice: string): Calculator | null {
