@@ -28,7 +28,7 @@ class CalculatorApp {
                 const number2 = InputHandler.getValidNumberInput('Digite o segundo numero: ');
                 try {
                     const result = calculator.calculate(number1, number2);
-                    console.log(`O resultado da operação é: ${result}`);
+                    console.log(`\nO resultado da operação é: ${result}\n`);
                 }
                 catch (error) {
                     console.log("Erro: ", error.message);

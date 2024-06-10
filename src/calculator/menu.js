@@ -13,8 +13,9 @@ class Menu {
             2 - Subtração (-)
             3 - Multiplicação (*)
             4 - Divisão (/)
-            5 - Sair            
-            --------------------------------
+            5 - Sair        
+
+            -------------------------------
             `);
     }
     static getCalculateOption(choice) {
@@ -24,10 +25,10 @@ class Menu {
             case '3': return new calculator_1.MultiplyOperation();
             case '4': return new calculator_1.DivideOperation();
             case '5':
-                console.log('Obrigado por usar a calculadora. Até a próxima!');
+                console.log('\nObrigado por usar a calculadora. Até a próxima!\n');
                 process.exit(0);
             default:
-                console.log('Erro: Operação não reconhecida. Tente novamente.');
+                console.log('Erro: Operação não reconhecida. Tente novamente.\n');
                 return null;
         }
     }
