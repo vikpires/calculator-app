@@ -1,5 +1,5 @@
 const readlineSync = require('readline-sync');
-import { Menu } from "./calculator/menu";
+import { Menu } from "./menu";
 
 // Handling of valid value in user input
 class InputHandler {
