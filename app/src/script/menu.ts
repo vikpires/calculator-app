@@ -1,5 +1,5 @@
 const readlineSync = require('readline-sync');
-import { Calculator, AddOperation, SubtractOperation, MultiplyOperation, DivideOperation } from "../calculator/calculator";
+import { Calculator, AddOperation, SubtractOperation, MultiplyOperation, DivideOperation } from "./calculator";
 
 // Display menu and select operations
 export class Menu {
